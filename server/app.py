@@ -27,12 +27,13 @@ def upload():
         img = request.files['image']
         if img:
                 filename = secure_filename(img.filename)
-                # img.save(filename)
+                img.save(filename)
                 s3.upload_file(
                     Bucket = BUCKET_NAME,
                     Filename=filename,
                     Key = filename
                 )
+                os.remove(filename)
                 msg = "upload done ! "
     return msg
 
